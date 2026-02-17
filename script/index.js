@@ -80,7 +80,7 @@ const displayAllProduct = (products) => {
                   <p class="">${product.title}</p>
                   <h1 class="font-bold text-xl">$${product.price}</h1>
                   <div class="flex justify-between">
-                     <div class="btn btn-outline w-40">
+                     <div onclick="loadDetails('${product.id}')" class="btn btn-outline w-40">
                         <i class="fa-regular fa-eye"></i>Details
                      </div>
                      <div class="btn btn-primary w-40">
@@ -93,6 +93,43 @@ const displayAllProduct = (products) => {
 
       trendingNow.append(trendingDiv);
    }
+};
+
+const loadDetails = async (id) => {
+   const url = `https://fakestoreapi.com/products/${id}`;
+   const res = await fetch(url);
+   const details = await res.json();
+   displayDetails(details);
+};
+
+const displayDetails = (product) => {
+   const detailsBox = document.getElementById("details-container");
+   detailsBox.innerHTML = `
+   
+   <div id="" class="space-y-5">
+               <div>
+                  <h2 class="text-2xl font-bold">
+                     ${product.title}
+                  </h2>
+               </div>
+               <div>
+                  <h2 class="font-bold">Description</h2>
+                  <p>${product.description}</p>
+               </div>
+               <div>
+                  <h2 class="font-bold">Category</h2>
+                  <p>${product.category}</p>
+               </div>
+               <div>
+                  <h2 class="font-bold">Count</h2>
+                  <div class="">
+                     ${product.rating.count}
+                  </div>
+               </div>
+            </div>
+
+   `;
+   document.getElementById("product_modal").showModal();
 };
 
 // const loadHome = () => {
